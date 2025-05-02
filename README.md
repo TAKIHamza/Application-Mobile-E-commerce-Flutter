@@ -55,4 +55,4 @@ Chaque fonctionnalité a été développée en tenant compte :
 **Hamza Taki**  
 Développeur Mobile & Web  
 📍 Maroc  
-🔗 [LinkedIn](https://linkedin.com/TAKIHamza) | [Portfolio](https://portfolio-frontend-brown-nu.vercel.app/)
+🔗 [LinkedIn](https://www.linkedin.com/in/hamza-taki-11509923b/) | [Portfolio](https://portfolio-frontend-brown-nu.vercel.app/)

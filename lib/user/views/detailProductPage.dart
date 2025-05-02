@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../modules/product.dart';
+import '../../models/product.dart';
 import '../../Provider/cart_provider.dart';
 import '../../Provider/favorite_provider.dart';
 
@@ -37,7 +37,7 @@ class _DetailProductPageState extends State<DetailProductPage> {
                 Container(
                    color: Colors.white,
                   child: Image.network(
-                    widget.product.image,
+                     'http://127.0.0.1:8000/storage/product/image/${widget.product.image}',
                     height: MediaQuery.of(context).size.height * 0.4,
                     width: double.infinity,
                    
@@ -67,7 +67,7 @@ class _DetailProductPageState extends State<DetailProductPage> {
                   ),
                   SizedBox(height: 8),
                   Text(
-                    '\$${widget.product.price}',
+                    '${widget.product.price} DH',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 16),
@@ -109,10 +109,9 @@ class _DetailProductPageState extends State<DetailProductPage> {
                       ),
                     ),
                    style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(300, 45),
+                        minimumSize: const Size(300, 45), backgroundColor: Colors.deepOrange.shade300,
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5)),
-                        primary: Colors.deepOrange.shade300),
+                            borderRadius: BorderRadius.circular(5))),
                   ),
                   SizedBox(height: 20,)
                 ],

@@ -3,10 +3,11 @@
 class Product {
   final int id;
   final String title;
-   var price; 
+  final double price;
   final String category;
   final String image;
   final String description;
+  late int cartQuantity = 0;
 
   Product(
       {required this.id,
@@ -17,13 +18,11 @@ class Product {
       required this.description});
 
   factory Product.fromJson(Map<String, dynamic> jsonData) {
-    
-  
     return Product(
         id: jsonData['id'],
         title: jsonData['title'],
-        price: jsonData['price'],
-        category: jsonData['category'],
+        price: jsonData['price'].toDouble(),
+        category: jsonData['catigory'],
         description: jsonData['description'],
         image: jsonData['image']);
   }

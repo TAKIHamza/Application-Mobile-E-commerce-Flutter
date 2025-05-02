@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dev/Provider/favorite_provider.dart';
 import 'package:provider/provider.dart';
-import '../modules/product.dart';
+import '../models/product.dart';
 import '../Provider/cart_provider.dart';
 import '../user/views/detailProductPage.dart';
 
@@ -51,19 +51,25 @@ class _ProductCardState extends State<ProductCard> {
               topRight: Radius.circular(8),
             ),
           ),
-          child: Image.network(widget.product.image),
+          child: Image.network( 'http://127.0.0.1:8000/storage/product/image/${widget.product.image}'),
         ),
         const SizedBox(height: 8.0),
-        Text(
-          widget.product.title,
-          style: TextStyle(fontWeight: FontWeight.bold),
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
+        Padding(
+          padding: const EdgeInsets.only(left: 5),
+          child: Text(
+            widget.product.title,
+            style: TextStyle(fontWeight: FontWeight.bold),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
         ),
         const SizedBox(height: 4.0),
-        Text(
-          '\$${widget.product.price}',
-          style: TextStyle(color: Colors.grey),
+        Padding(
+          padding: const EdgeInsets.only(left: 6),
+          child: Text(
+            '${widget.product.price} DH',
+            style: TextStyle(color: Colors.grey),
+          ),
         ),
         SizedBox(height: 8.0),
         Row(
@@ -71,13 +77,15 @@ class _ProductCardState extends State<ProductCard> {
           children: [
             IconButton(
               onPressed: () {
-                setState(() {
-                  _isFavorite = !_isFavorite;
+                 _isFavorite = !_isFavorite;
                   if (_isFavorite) {
                     favoriteProvider.addToFavorites(widget.product);
                   } else {
                     favoriteProvider.removeFromFavorites(widget.product);
                   }
+                setState(() {
+                 
+
                 });
               },
               icon: Icon(

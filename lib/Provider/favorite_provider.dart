@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../modules/product.dart';
+import '../models/product.dart';
 
 class Favorites with ChangeNotifier {
   

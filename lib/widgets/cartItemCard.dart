@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dev/modules/product.dart';
+import 'package:flutter_dev/models/product.dart';
 import 'package:provider/provider.dart';
 
 import '../Provider/cart_provider.dart';
@@ -34,7 +34,7 @@ class _CartItemCardState extends State<CartItemCard> {
           Row(
             children: [
               Image.network(
-                widget.product.image,
+                'http://127.0.0.1:8000/storage/product/image/${widget.product.image}',
                 height: 95,
                 width: 90,
               ),
@@ -66,6 +66,7 @@ class _CartItemCardState extends State<CartItemCard> {
             children: [
               IconButton(
                   onPressed: () {
+                    widget.onPressed_minimize(widget.product.price*widget.product.cartQuantity);
                     widget.onPressed_delete(widget.product);
                   },
                   icon: const Icon(
@@ -88,7 +89,7 @@ class _CartItemCardState extends State<CartItemCard> {
                     IconButton(
                         onPressed: () {
                           setState(() {
-                            _itemQuantity++;
+                            widget.product.cartQuantity++;
                             widget.onPressed_add(widget.product.price);
                           });
                         },
@@ -96,13 +97,13 @@ class _CartItemCardState extends State<CartItemCard> {
                           Icons.add,
                           size: 20,
                         )),
-                    Text(' $_itemQuantity'),
+                    Text(widget.product.cartQuantity.toString()),
                     Container(
                       child: IconButton(
                         onPressed: () {
                           setState(() {
-                            if (_itemQuantity > 0) {
-                              _itemQuantity--;
+                            if (widget.product.cartQuantity > 0) {
+                              widget.product.cartQuantity--;
                               widget.onPressed_minimize(widget.product.price);
                             }
                           });

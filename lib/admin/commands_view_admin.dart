@@ -1,33 +1,32 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
+import '../services/commands_service.dart';
 
-import '../../services/commands_service.dart';
-class Profile_view extends StatefulWidget {
-  const Profile_view({super.key});
+class Commands_view_admin extends StatefulWidget {
+  const Commands_view_admin({super.key});
 
   @override
-  State<Profile_view> createState() => _Profile_viewState();
+  State<Commands_view_admin> createState() => _Commands_view_adminState();
 }
 
-class _Profile_viewState extends State<Profile_view> {
-
-  @override
-   CommandService commandService = CommandService();
+class _Commands_view_adminState extends State<Commands_view_admin> {
+  CommandService commandService = CommandService();
 
   Future<String?> _getToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString('token');
   }
 
-  Future<void> changeReceived(int id, int validate) async {
-    final url = Uri.parse('http://127.0.0.1:8000/api/updateCommandReceived');
+  Future<void> changeValidate(int id, int validate) async {
+    final url = Uri.parse('http://127.0.0.1:8000/api/updateCommandValidation');
     final headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ${await _getToken()}',
     };
-    
+    print(id);
     final commandId = {
       'id': id,
       'validation': validate,
@@ -42,20 +41,21 @@ class _Profile_viewState extends State<Profile_view> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
             backgroundColor: Colors.green,
-            content: Text('updated successfully .')),
+            content: Text('Validated successfully .')),
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-            backgroundColor: Colors.red, content: Text('Error update Received .')),
+            backgroundColor: Colors.red, content: Text('Error Validate .')),
       );
       print('Error changing role user. ${response.statusCode}');
     }
   }
 
-   Widget build(BuildContext context) {
+  @override
+  Widget build(BuildContext context) {
     return FutureBuilder(
-      future: commandService.fetchClientCommands(),
+      future: commandService.fetchCommands(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
           var commands = snapshot.data;
@@ -71,7 +71,7 @@ class _Profile_viewState extends State<Profile_view> {
                           borderRadius:
                               BorderRadius.vertical(top: Radius.circular(25))),
                       builder: (context) => Padding(
-                            padding: const EdgeInsets.all(30.0),
+                            padding: const EdgeInsets.all(20.0),
                             child: Column(
                               children: [
                                 Text(
@@ -83,7 +83,7 @@ class _Profile_viewState extends State<Profile_view> {
                                   textAlign: TextAlign.center,
                                 ),
                                 SizedBox(
-                                  height: 20,
+                                  height: 8,
                                 ),
                                 Row(
                                   children: [
@@ -98,7 +98,7 @@ class _Profile_viewState extends State<Profile_view> {
                                   ],
                                 ),
                                 SizedBox(
-                                  height: 9,
+                                  height: 8,
                                 ),
                                 Row(
                                   children: [
@@ -111,7 +111,7 @@ class _Profile_viewState extends State<Profile_view> {
                                   ],
                                 ),
                                 SizedBox(
-                                  height: 9,
+                                  height: 8,
                                 ),
                                 Row(
                                   children: [
@@ -124,7 +124,7 @@ class _Profile_viewState extends State<Profile_view> {
                                   ],
                                 ),
                                 SizedBox(
-                                  height: 9,
+                                  height: 8,
                                 ),
                                 Row(
                                   children: [
@@ -136,8 +136,8 @@ class _Profile_viewState extends State<Profile_view> {
                                     Text(commands[index].adresse),
                                   ],
                                 ),
-                                  SizedBox(
-                                  height: 9,
+                                 SizedBox(
+                                  height: 8,
                                 ),
                                 Row(
                                   children: [
@@ -149,10 +149,9 @@ class _Profile_viewState extends State<Profile_view> {
                                     Text((commands[index].productPrice*commands[index].quantity).toString()),
                                   ],
                                 ),
-                                SizedBox(
-                                  height: 9,
+                                 SizedBox(
+                                  height: 8,
                                 ),
-
                                 Row(
                                   children: [
                                     const Text(" Created at : ",
@@ -163,7 +162,69 @@ class _Profile_viewState extends State<Profile_view> {
                                     Text(commands[index].dateCommand),
                                   ],
                                 ),
-                                
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Text(
+                                  "Client ",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 20,
+                                      color: Colors.blueGrey[700]),
+                                  textAlign: TextAlign.center,
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Row(
+                                  children: [
+                                    const Text(" Client id : ",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 15)),
+                                    const SizedBox(width: 10),
+                                    Text(commands[index].userId.toString()),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Row(
+                                  children: [
+                                    const Text(" Name : ",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 15)),
+                                    const SizedBox(width: 10),
+                                    Text(commands[index].userName),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Row(
+                                  children: [
+                                    const Text(" Email : ",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 15)),
+                                    const SizedBox(width: 10),
+                                    Text(commands[index].email),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Row(
+                                  children: [
+                                    const Text(" Telephone : ",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 15)),
+                                    const SizedBox(width: 10),
+                                    Text(commands[index].telephone),
+                                  ],
+                                ),
                               ],
                             ),
                           ));
@@ -215,17 +276,16 @@ class _Profile_viewState extends State<Profile_view> {
                         children: [
                           TextButton(
                             onPressed: () {
-                             if(commands[index].isValidate != 0) 
-                             {changeReceived(commands[index].id,
-                                  commands[index].received);}
+                              changeValidate(commands[index].id,
+                                  commands[index].isValidate);
                               setState(() {});
                             },
                             child: Text(
-                              commands[index].received == 0
-                                  ? "Not received"
-                                  : "received",
+                              commands[index].isValidate == 0
+                                  ? "Not validate"
+                                  : "Validate",
                               style: TextStyle(
-                                  color: commands[index].received == 0
+                                  color: commands[index].isValidate == 0
                                       ? Colors.red
                                       : Colors.green),
                             ),
@@ -236,7 +296,7 @@ class _Profile_viewState extends State<Profile_view> {
                           Container(
                             height: 15,
                             child: CircleAvatar(
-                              backgroundColor: commands[index].isValidate == 0
+                              backgroundColor: commands[index].received == 0
                                   ? Colors.red
                                   : Colors.green,
                             ),

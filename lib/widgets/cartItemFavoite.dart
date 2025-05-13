@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dev/Provider/favorite_provider.dart';
 import 'package:provider/provider.dart';
-import '../modules/product.dart';
+import '../models/product.dart';
 import '../Provider/cart_provider.dart';
 import '../user/views/detailProductPage.dart';
 
@@ -49,7 +49,7 @@ class _CartItemFavoriteState extends State<CartItemFavorite> {
                   topRight: Radius.circular(8),
                 ),
               ),
-              child: Image.network(widget.product.image),
+              child: Image.network( 'http://127.0.0.1:8000/storage/product/image/${widget.product.image}'),
             ),
             const SizedBox(height: 8.0),
             Text(
@@ -59,9 +59,12 @@ class _CartItemFavoriteState extends State<CartItemFavorite> {
               overflow: TextOverflow.ellipsis,
             ),
             const SizedBox(height: 4.0),
-            Text(
-              '\$${widget.product.price}',
-              style: TextStyle(color: Colors.grey),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                '${widget.product.price} DH',
+                style: TextStyle(color: Colors.grey),
+              ),
             ),
             SizedBox(height: 8.0),
             Row(

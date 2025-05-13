@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../services/products_services.dart';
+
+import '../../services/users_service.dart';
 
 class Notification_view extends StatefulWidget {
   const Notification_view({super.key});
@@ -15,10 +16,10 @@ class _Notification_viewState extends State<Notification_view> {
     return Center(
       child: TextButton(
           onPressed: () async {
-            ProductsApi productsApi = ProductsApi();
-            var products = await productsApi.fetchProducts();
+            UserService userApi = UserService();
+            var products = await userApi.fetchUsers();
             for (var e in products) {
-              print(e.title);
+              print(e.name);
             }
             
           },
